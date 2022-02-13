@@ -1,6 +1,7 @@
 const button = document.getElementsByTagName("button")[0]
 const selectBotName = document.getElementById('bot-currency-select')
 
+
 const dolar = 5.3
 const real = 1
 const euro = 6
@@ -42,6 +43,22 @@ const convert = () => {
             currency: 'USD'
         }).format(inputAmount / dolar)
     }
+    resetinput()
+    
+}
+
+const resetinput = () => {
+    document.getElementById('valor').value = ''
+}
+
+const resetvalues = () => {
+    const  resettop = document.getElementById('dolar-value')
+    const resetbot = document.getElementById('real-value')
+
+    resettop.innerHTML = '0'
+    resetbot.innerHTML = '0'
+
+    
 }
 
 const currencyChange = () => {
@@ -64,9 +81,24 @@ const currencyChange = () => {
         botCurrencyFlag.src = "./assets/bit.png"
 
     }
-    convert()
+    resetvalues()
+    resetinput()
+  
 }
+
+const input = document.getElementById('valor').value
+
+const inputchange =  () => {
+        input.value = new Intl.NumberFormat('pt-BR', {
+            style: 'currency',
+            currency: 'BRL'
+        }).format(input)
+    }
+
 
 button.addEventListener('click', convert)
 
 selectBotName.addEventListener('change', currencyChange)
+
+input.addEventListener('change', inputchange)
+

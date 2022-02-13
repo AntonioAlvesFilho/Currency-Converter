@@ -40,7 +40,10 @@ main {
 label {
     color: #4d4c4c;
 }
-
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+        display: none;
+}
 input {
     width: 327px;
     height: 48px;
@@ -54,6 +57,7 @@ input {
     box-sizing: border-box;
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.15);
     border-radius: 4px;
+    
 }
 
 select {
