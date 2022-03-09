@@ -2,49 +2,50 @@ const button = document.getElementsByTagName("button")[0]
 const selectBotName = document.getElementById('bot-currency-select')
 
 
-const dolar = 5.3
-const real = 1
-const euro = 6
-const bitcoin = 230000
 
-
-const convert = () => {
+const convert =async  () => {
 
     const inputAmount = document.getElementById('valor').value
     const realValue = document.getElementById('real-value')
+
+    const newCurrency = await fetch(" https://economia.awesomeapi.com.br/last/USD-BRL,EUR-BRL,BTC-BRL").then (response => response.json())
+
+    const dolar = newCurrency.USDBRL.high
+    const euro = newCurrency.EURBRL.high
+    const bitcoin = newCurrency.BTCBRL.high
 
     realValue.innerHTML = new Intl.NumberFormat('pt-BR', {
         style: 'currency',
         currency: 'BRL'
     }).format(inputAmount)
 
-    const dolarValue = document.getElementById('dolar-value')
+    const botValue = document.getElementById('dolar-value')
 
 
     if (selectBotName.value === 'Euro - €') {
 
-        dolarValue.innerHTML = new Intl.NumberFormat('de-DE', {
+        botValue.innerHTML = new Intl.NumberFormat('de-DE', {
             style: 'currency',
             currency: 'EUR'
         }).format(inputAmount / euro)
     } else if (selectBotName.value === 'Real Brasileiro - R$') {
-        dolarValue.innerHTML = new Intl.NumberFormat('pt-BR', {
+        botValue.innerHTML = new Intl.NumberFormat('pt-BR', {
             style: 'currency',
             currency: 'BRL'
-        }).format(inputAmount / real)
+        }).format(inputAmount)
     } else if (selectBotName.value === 'BitCoin - ₿') {
-        dolarValue.innerHTML = new Intl.NumberFormat('de-DE', {
+        botValue.innerHTML = new Intl.NumberFormat('de-DE', {
             style: 'currency',
             currency: 'BTC'
-        }).format(inputAmount / bitcoin)
+        }).format((inputAmount / bitcoin) / 1000)
     } else if (selectBotName.value === 'Dólar Americano - $') {
-        dolarValue.innerHTML = new Intl.NumberFormat('en-US', {
+        botValue.innerHTML = new Intl.NumberFormat('en-US', {
             style: 'currency',
             currency: 'USD'
         }).format(inputAmount / dolar)
     }
     resetinput()
-    
+
 }
 
 const resetinput = () => {
@@ -52,13 +53,13 @@ const resetinput = () => {
 }
 
 const resetvalues = () => {
-    const  resettop = document.getElementById('dolar-value')
+    const resettop = document.getElementById('dolar-value')
     const resetbot = document.getElementById('real-value')
 
     resettop.innerHTML = '0'
     resetbot.innerHTML = '0'
 
-    
+
 }
 
 const currencyChange = () => {
@@ -83,17 +84,17 @@ const currencyChange = () => {
     }
     resetvalues()
     resetinput()
-  
+
 }
 
 const input = document.getElementById('valor').value
 
-const inputchange =  () => {
-        input.value = new Intl.NumberFormat('pt-BR', {
-            style: 'currency',
-            currency: 'BRL'
-        }).format(input)
-    }
+const inputchange = () => {
+    input.value = new Intl.NumberFormat('pt-BR', {
+        style: 'currency',
+        currency: 'BRL'
+    }).format(input)
+}
 
 
 button.addEventListener('click', convert)
@@ -101,4 +102,3 @@ button.addEventListener('click', convert)
 selectBotName.addEventListener('change', currencyChange)
 
 input.addEventListener('change', inputchange)
-
