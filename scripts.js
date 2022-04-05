@@ -8,11 +8,11 @@ const convert =async  () => {
     const inputAmount = document.getElementById('valor').value
     const realValue = document.getElementById('real-value')
 
-    const newCurrency = await fetch(" https://economia.awesomeapi.com.br/last/USD-BRL,EUR-BRL,BTC-BRL").then (response => response.json())
+    const newCurrency = await fetch("https://economia.awesomeapi.com.br/last/USD-BRL,EUR-BRL,BTC-BRL").then (response => response.json())
 
-    const dolar = newCurrency.USDBRL.high
-    const euro = newCurrency.EURBRL.high
-    const bitcoin = newCurrency.BTCBRL.high
+    const dolar = newCurrency.USD.high
+    const euro = newCurrency.EUR.high
+    const bitcoin = newCurrency.BTC.high
 
     realValue.innerHTML = new Intl.NumberFormat('pt-BR', {
         style: 'currency',
@@ -87,18 +87,7 @@ const currencyChange = () => {
 
 }
 
-const input = document.getElementById('valor').value
-
-const inputchange = () => {
-    input.value = new Intl.NumberFormat('pt-BR', {
-        style: 'currency',
-        currency: 'BRL'
-    }).format(input)
-}
-
 
 button.addEventListener('click', convert)
 
 selectBotName.addEventListener('change', currencyChange)
-
-input.addEventListener('change', inputchange)
